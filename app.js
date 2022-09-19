@@ -10,6 +10,8 @@ const addBtn = document.getElementById("todo-button");
 const todoInput = document.getElementById("todo-input");
 const todoUl = document.getElementById("todo-ul");
 
+let todos = [];
+
 addBtn.addEventListener("click", () => {
   if (todoInput.value.trim() === "") {
     alert("PLease enter new todo");
@@ -58,12 +60,31 @@ const createListElement = (newTodo) => {
   todoUl.appendChild(li);
 };
 
+//!
+//!
+todoUl.addEventListener("click", (e) => {
+  console.log(e.target);
+
+  //! event, bir delete butonundan  geldi ise
+  if (e.target.classList.contains("fa-trash")) {
+    e.target.parentElement.remove();
+  }
+  //! event, bir okey butonundan  geldi ise
+  if (e.target.classList.contains("fa-check")) {
+    //? ilgili li elementinde checked adinda bir class'i varsa bunu sil
+    //? aksi takdirdce ekle (DOM)
+    e.target.parentElement.classList.toggle("completed");
+  }
+});
+
+//? Enter tusu ele ekleme mumkun olsun
 todoInput.addEventListener("keydown", (e) => {
   if (e.code === "Enter") {
     addBtn.click();
   }
 });
 
+//? Baslangicta input aktif olsun
 window.onload = function () {
   todoInput.focus();
 };
